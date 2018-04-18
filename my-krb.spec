@@ -61,7 +61,10 @@ install --directory $RPM_BUILD_ROOT/var/kerberos
 install --directory $RPM_BUILD_ROOT/var/kerberos/krb5kdc
 install -m 0755 kdc-custom.conf $RPM_BUILD_ROOT/var/kerberos/krb5kdc/kdc-custom.conf
 
+
 %post
+sed -i "/default_realm/s/= \(.*\)/ = %{realm}/" /etc/krb5.conf /etc/krb5.conf
+rm rm /var/kerberos/krb5kdc/principal*
 kdb5_util create -r %{realm} -s -P %{password}
 echo "*/admin@/%{realm} *" >> /var/kerberos/krb5kdc/kadm5.acl
 cat /var/kerberos/krb5kdc/kdc-custom.conf >> /var/kerberos/krb5kdc/kdc.conf
