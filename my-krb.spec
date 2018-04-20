@@ -68,6 +68,8 @@ rm rm /var/kerberos/krb5kdc/principal*
 kdb5_util create -r %{realm} -s -P %{password}
 echo "*/admin@/%{realm} *" >> /var/kerberos/krb5kdc/kadm5.acl
 cat /var/kerberos/krb5kdc/kdc-custom.conf >> /var/kerberos/krb5kdc/kdc.conf
+kadmin.local -q "addprinc -pw %{password} root"
+kadmin.local -q "addprinc -pw %{password} root/admin"
 
 %clean
 rm -rf $RPM_BUILD_ROOT
