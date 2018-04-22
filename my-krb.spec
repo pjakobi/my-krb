@@ -101,5 +101,7 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Apr 22 2018  Pascal Jakobi <pascal.jakobi@thalesgroup.com> 0.0.3
+- SASL
 * Fri Mar 30 2018  Pascal Jakobi <pascal.jakobi@thalesgroup.com> 0.1.1
 - Initial RPM release
