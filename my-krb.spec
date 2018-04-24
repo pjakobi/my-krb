@@ -6,7 +6,7 @@ Name: my-krb
 #%define _topdir /home/utilisateur/Soft/rpmbuild
 #%define _tmppath /home/utilisateur/Soft/rpmbuild/tmp
 %define version 0.0
-%define release 2
+%define release 3
 %define realm THALESGROUP.COM
 %define dnsdomain %(echo %{realm} | tr '[:upper:]' '[:lower:]')
 %define servername dumbo.home
@@ -89,6 +89,10 @@ kdb5_util create -r %{realm} -s -P %{dbpassword}
 echo "*/admin@/%{realm} *" >> /var/kerberos/krb5kdc/kadm5.acl
 kadmin.local -q "addprinc -pw %{password} root"
 kadmin.local -q "addprinc -pw %{password} root/admin"
+kadmin.local -q "addprinc -randkey ldap/%{servername}"
+kadmin.local -q "ktadd -q -k /etc/krb5.keytab ldap/%{servername}"
+kadmin.local -q "addprinc -randkey host/%{servername}"
+kadmin.local -q "ktadd -q -k /etc/krb5.keytab host/%{servername}"
 
 %clean
 rm -rf $RPM_BUILD_ROOT
